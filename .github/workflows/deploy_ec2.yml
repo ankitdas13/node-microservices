@@ -24,3 +24,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: pm2 delete all
+    - run: npm run start
