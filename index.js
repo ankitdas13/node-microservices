@@ -6,7 +6,7 @@ const app = express();
 app.use(cors())
 
 app.get("/",(request, response)=>{
-    response.send('api test v2...')
+    response.send('api test v3...')
  })
 
 app.get("/posts", async (request, response)=>{
