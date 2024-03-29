@@ -8,9 +8,9 @@ job("node js project ver 2"){
     }
     wrappers { 
         nodejs('node 18')
-    }
-    credentialsBinding {
-        usernamePassword('USERNAME_DOC', 'PASSWORD_DOC', 'dockerhubcred')
+        credentialsBinding {
+           usernamePassword('USERNAME_DOC', 'PASSWORD_DOC', 'dockerhubcred')
+        }
     }
     steps {
         shell('npm install')
