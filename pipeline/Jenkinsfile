@@ -1,0 +1,26 @@
+node {
+    stage('preparation'){
+     echo 'cloning repo'
+     git branch: 'main', url: 'https://github.com/ankitdas13/node-microservices.git'
+    }
+    stage('test'){
+     echo 'running test cases'
+     nodejs(nodeJSInstallationName: 'node 18') {
+        sh 'npm i -D'
+        sh 'npm run test'
+      }
+    }
+    stage('build'){
+     echo 'building image'
+     sh 'docker build -t ankitrazorpay/pipelinedemo:${BUILD_NUMBER} .'
+    }
+    stage('deploy to dockerhub'){
+     echo 'building image'
+     withCredentials([usernamePassword(credentialsId: 'dockerhubcred', passwordVariable: 'PASSWORD_DOC', usernameVariable: 'USERNAME_DOC')]) {
+       sh 'docker login -u ${USERNAME_DOC} -p${PASSWORD_DOC}'
+     }
+    }
+    stage('cleanup'){
+      sh 'docker logout' 
+    }
+}
