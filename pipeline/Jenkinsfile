@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
       DOCKER_IMG = 'ankitrazorpay/pipelinedemo:${BUILD_NUMBER}'
+      scannerHome = tool 'SonarScanner'
     }
     stages { 
       stage('preparation'){
@@ -10,6 +11,13 @@ pipeline {
         git branch: 'main', url: 'https://github.com/ankitdas13/node-microservices.git'
        }
       }
+      stage('SonarQube Analysis') {
+        steps {
+          withSonarQubeEnv('SonarScanner') {
+            sh "${scannerHome}/bin/sonar-scanner"
+          }
+        }
+       }
       stage('test'){
        steps {
         echo 'running test cases'
