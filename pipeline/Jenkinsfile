@@ -18,6 +18,7 @@ node {
      echo 'building image'
      withCredentials([usernamePassword(credentialsId: 'dockerhubcred', passwordVariable: 'PASSWORD_DOC', usernameVariable: 'USERNAME_DOC')]) {
        sh 'docker login -u ${USERNAME_DOC} -p${PASSWORD_DOC}'
+       sh 'docker image push ankitrazorpay/pipelinedemo:${BUILD_NUMBER}'
      }
     }
     stage('cleanup'){
